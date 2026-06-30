@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>我的个人网站</title>
+    <meta name="description" content="一个部署在云服务器上的个人网站。" />
+    <style>
+      :root {
+        color-scheme: light;
+        --bg: #f7f3ea;
+        --ink: #1d1f24;
+        --muted: #5d6572;
+        --accent: #1f7a6b;
+        --line: #d8d1c3;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family:
+          Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+          "Segoe UI", sans-serif;
+        color: var(--ink);
+        background:
+          linear-gradient(90deg, rgba(31, 122, 107, 0.08) 1px, transparent 1px),
+          linear-gradient(rgba(31, 122, 107, 0.08) 1px, transparent 1px),
+          var(--bg);
+        background-size: 28px 28px;
+      }
+
+      main {
+        width: min(920px, calc(100% - 40px));
+        min-height: 100vh;
+        margin: 0 auto;
+        display: grid;
+        align-content: center;
+        gap: 28px;
+        padding: 56px 0;
+      }
+
+      .eyebrow {
+        margin: 0;
+        color: var(--accent);
+        font-size: 14px;
+        font-weight: 700;
+        letter-spacing: 0;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        max-width: 780px;
+        margin: 0;
+        font-size: clamp(44px, 8vw, 88px);
+        line-height: 0.96;
+        letter-spacing: 0;
+      }
+
+      p {
+        max-width: 620px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.8;
+      }
+
+      .links {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        padding-top: 10px;
+      }
+
+      a {
+        color: var(--ink);
+        text-decoration-color: var(--accent);
+        text-decoration-thickness: 2px;
+        text-underline-offset: 5px;
+      }
+
+      .button {
+        display: inline-flex;
+        min-height: 44px;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--line);
+        padding: 0 16px;
+        background: rgba(255, 255, 255, 0.56);
+        color: var(--ink);
+        text-decoration: none;
+      }
+
+      .button.primary {
+        border-color: var(--accent);
+        background: var(--accent);
+        color: #fff;
+      }
+
+      @media (max-width: 640px) {
+        main {
+          width: min(100% - 28px, 920px);
+        }
+
+        h1 {
+          font-size: 48px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <p class="eyebrow">Personal Site</p>
+      <h1>你好，我的网站已经跑起来了。</h1>
+      <p>
+        这是第一个可部署版本。接下来可以把这里改成你的作品、博客、简历、
+        项目记录，或者任何你想长期放在互联网上的东西。
+      </p>
+      <div class="links" aria-label="常用链接">
+        <a class="button primary" href="mailto:hello@example.com">联系我</a>
+        <a class="button" href="https://github.com/" rel="noreferrer">GitHub</a>
+      </div>
+    </main>
+  </body>
+</html>
+

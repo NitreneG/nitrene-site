@@ -1,0 +1,71 @@
+name: Deploy personal site
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: personal-site-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    env:
+      SERVER_HOST: ${{ secrets.SERVER_HOST }}
+      SERVER_USER: ${{ secrets.SERVER_USER }}
+      SERVER_PORT: ${{ secrets.SERVER_PORT || '22' }}
+      SERVER_PATH: ${{ secrets.SERVER_PATH || '/var/www/personal-site' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate required files
+        run: |
+          test -d src
+          test -f src/index.html
+
+      - name: Configure SSH
+        run: |
+          test -n "$SERVER_HOST"
+          test -n "$SERVER_USER"
+          test -n "${{ secrets.SERVER_SSH_KEY }}"
+          install -m 700 -d ~/.ssh
+          printf '%s\n' "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/personal_site_deploy
+          chmod 600 ~/.ssh/personal_site_deploy
+          ssh-keyscan -p "$SERVER_PORT" "$SERVER_HOST" >> ~/.ssh/known_hosts
+
+      - name: Prepare release directory
+        run: |
+          RELEASE_ID="${GITHUB_SHA::12}-$(date -u +%Y%m%d%H%M%S)"
+          echo "RELEASE_ID=$RELEASE_ID" >> "$GITHUB_ENV"
+          ssh -i ~/.ssh/personal_site_deploy -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" 'bash -s' -- "$SERVER_PATH" "$RELEASE_ID" <<'REMOTE'
+          set -euo pipefail
+          SERVER_PATH="$1"
+          RELEASE_ID="$2"
+          mkdir -p "$SERVER_PATH/releases/$RELEASE_ID"
+          mkdir -p "$SERVER_PATH/shared"
+          REMOTE
+
+      - name: Upload site
+        run: |
+          rsync -az --delete \
+            -e "ssh -i ~/.ssh/personal_site_deploy -p $SERVER_PORT" \
+            src/ "$SERVER_USER@$SERVER_HOST:$SERVER_PATH/releases/$RELEASE_ID/"
+
+      - name: Activate release
+        run: |
+          ssh -i ~/.ssh/personal_site_deploy -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" 'bash -s' -- "$SERVER_PATH" "$RELEASE_ID" <<'REMOTE'
+          set -euo pipefail
+          SERVER_PATH="$1"
+          RELEASE_ID="$2"
+          ln -sfn "$SERVER_PATH/releases/$RELEASE_ID" "$SERVER_PATH/current"
+          sudo nginx -t
+          sudo systemctl reload nginx
+          find "$SERVER_PATH/releases" -mindepth 1 -maxdepth 1 -type d | sort | head -n -5 | xargs -r rm -rf
+          REMOTE
+

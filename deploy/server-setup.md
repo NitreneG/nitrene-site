@@ -1,0 +1,194 @@
+# Server Setup
+
+这份文档只做服务器的一次性配置。完成以后，日常更新网站只需要在本地修改 `src/` 并 push 到 GitHub。
+
+下面示例默认服务器是 Ubuntu/Debian 系，部署目录是 `/var/www/personal-site`，部署用户是 `deploy`。
+
+## 1. 本地先检查服务器
+
+```bash
+chmod +x deploy/server-check.sh
+./deploy/server-check.sh <user>@<server-ip> -p 22
+```
+
+如果你的 SSH 端口不是 22，把 `-p 22` 改成真实端口。
+
+## 2. 安装基础包
+
+SSH 登录服务器后执行：
+
+```bash
+sudo apt update
+sudo apt install -y nginx git rsync curl ca-certificates ufw
+sudo systemctl enable --now nginx
+```
+
+如果你已经装好 Docker，可以先不动 Docker。这个静态站方案不依赖 Docker；以后加后端服务时再用 Docker Compose 会更清楚。
+
+## 3. 创建部署用户和目录
+
+```bash
+sudo adduser deploy
+sudo usermod -aG www-data deploy
+
+sudo mkdir -p /var/www/personal-site/releases
+sudo mkdir -p /var/www/personal-site/shared
+sudo mkdir -p /var/www/personal-site/current
+
+sudo chown -R deploy:www-data /var/www/personal-site
+sudo chmod -R 755 /var/www/personal-site
+```
+
+如果你不想创建 `deploy` 用户，也可以用已有用户，但建议不要长期用 root 做自动部署。
+
+## 4. 配置 GitHub Actions 的 SSH key
+
+在你的 Mac 上生成一把专门给 GitHub Actions 用的部署 key：
+
+```bash
+ssh-keygen -t ed25519 -C "github-actions-personal-site" -f ~/.ssh/personal_site_deploy
+```
+
+把公钥放到服务器：
+
+```bash
+ssh-copy-id -i ~/.ssh/personal_site_deploy.pub deploy@<server-ip>
+```
+
+如果没有 `ssh-copy-id`，就在服务器上手动追加：
+
+```bash
+sudo mkdir -p /home/deploy/.ssh
+sudo nano /home/deploy/.ssh/authorized_keys
+sudo chown -R deploy:deploy /home/deploy/.ssh
+sudo chmod 700 /home/deploy/.ssh
+sudo chmod 600 /home/deploy/.ssh/authorized_keys
+```
+
+然后在 GitHub 仓库中添加 Secrets：
+
+```text
+SERVER_HOST       你的服务器公网 IP 或域名
+SERVER_USER       deploy
+SERVER_PORT       22
+SERVER_PATH       /var/www/personal-site
+SERVER_SSH_KEY    ~/.ssh/personal_site_deploy 的私钥内容
+```
+
+`SERVER_SSH_KEY` 应该是私钥全文，不要提交到 GitHub 仓库文件里。
+
+## 5. 允许部署用户重载 Nginx
+
+GitHub Actions 发布成功后会测试并 reload Nginx。给 `deploy` 用户最小 sudo 权限：
+
+```bash
+sudo visudo -f /etc/sudoers.d/personal-site-deploy
+```
+
+写入：
+
+```text
+deploy ALL=(root) NOPASSWD: /usr/sbin/nginx -t, /bin/systemctl reload nginx, /usr/bin/systemctl reload nginx
+```
+
+保存后检查：
+
+```bash
+sudo -l -U deploy
+```
+
+## 6. 配置 Nginx 站点
+
+在服务器创建站点配置：
+
+```bash
+sudo nano /etc/nginx/sites-available/personal-site
+```
+
+复制 `deploy/nginx.personal-site.conf.template` 的内容进去，并替换：
+
+```text
+server_name example.com www.example.com;
+```
+
+如果域名还没解析好，可以先用：
+
+```text
+server_name _;
+```
+
+启用站点：
+
+```bash
+sudo ln -s /etc/nginx/sites-available/personal-site /etc/nginx/sites-enabled/personal-site
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+如果默认站点占用了同一个域名或 `_`，可以禁用默认站点：
+
+```bash
+sudo rm /etc/nginx/sites-enabled/default
+sudo nginx -t
+sudo systemctl reload nginx
+```
+
+## 7. 防火墙和腾讯云安全组
+
+服务器内的 UFW 可以这样设置：
+
+```bash
+sudo ufw allow OpenSSH
+sudo ufw allow 'Nginx Full'
+sudo ufw status
+```
+
+腾讯云控制台的安全组也需要放行：
+
+```text
+SSH: 你的 SSH 端口
+HTTP: 80
+HTTPS: 443
+```
+
+## 8. 第一次发布
+
+本地初始化 git，并推到 GitHub：
+
+```bash
+git init
+git add .
+git commit -m "Initial personal site deploy setup"
+git branch -M main
+git remote add origin git@github.com:<your-name>/<your-repo>.git
+git push -u origin main
+```
+
+GitHub Actions 跑完后，再检查服务器：
+
+```bash
+./deploy/server-check.sh deploy@<server-ip> -p 22
+```
+
+## 9. 以后经常改哪里
+
+经常改：
+
+- `src/index.html`
+- `src/` 里的样式、图片、脚本
+- 如果以后接入构建工具，再改 `package.json` 和前端源码
+
+偶尔改：
+
+- `.github/workflows/deploy.yml`
+- `deploy/nginx.personal-site.conf.template`
+- `deploy/server-setup.md`
+
+基本不改，只留在服务器：
+
+- `/etc/nginx/sites-available/personal-site`
+- `/var/log/nginx/*.log`
+- `/etc/letsencrypt/`
+- `/home/deploy/.ssh/authorized_keys`
+- `/var/www/personal-site/releases`
+
