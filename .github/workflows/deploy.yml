@@ -31,19 +31,32 @@ jobs:
 
       - name: Configure SSH
         run: |
-          test -n "$SERVER_HOST"
-          test -n "$SERVER_USER"
-          test -n "${{ secrets.SERVER_SSH_KEY }}"
+          missing=0
+          if [ -z "$SERVER_HOST" ]; then
+            echo "::error::Missing repository secret: SERVER_HOST"
+            missing=1
+          fi
+          if [ -z "$SERVER_USER" ]; then
+            echo "::error::Missing repository secret: SERVER_USER"
+            missing=1
+          fi
+          if [ -z "${{ secrets.SERVER_SSH_KEY }}" ]; then
+            echo "::error::Missing repository secret: SERVER_SSH_KEY"
+            missing=1
+          fi
+          if [ "$missing" -ne 0 ]; then
+            exit 1
+          fi
           install -m 700 -d ~/.ssh
-          printf '%s\n' "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/personal_site_deploy
-          chmod 600 ~/.ssh/personal_site_deploy
+          printf '%s\n' "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/nitrene_site_deploy
+          chmod 600 ~/.ssh/nitrene_site_deploy
           ssh-keyscan -p "$SERVER_PORT" "$SERVER_HOST" >> ~/.ssh/known_hosts
 
       - name: Prepare release directory
         run: |
           RELEASE_ID="${GITHUB_SHA::12}-$(date -u +%Y%m%d%H%M%S)"
           echo "RELEASE_ID=$RELEASE_ID" >> "$GITHUB_ENV"
-          ssh -i ~/.ssh/personal_site_deploy -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" 'bash -s' -- "$SERVER_PATH" "$RELEASE_ID" <<'REMOTE'
+          ssh -i ~/.ssh/nitrene_site_deploy -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" 'bash -s' -- "$SERVER_PATH" "$RELEASE_ID" <<'REMOTE'
           set -euo pipefail
           SERVER_PATH="$1"
           RELEASE_ID="$2"
@@ -54,12 +67,12 @@ jobs:
       - name: Upload site
         run: |
           rsync -az --delete \
-            -e "ssh -i ~/.ssh/personal_site_deploy -p $SERVER_PORT" \
+            -e "ssh -i ~/.ssh/nitrene_site_deploy -p $SERVER_PORT" \
             src/ "$SERVER_USER@$SERVER_HOST:$SERVER_PATH/releases/$RELEASE_ID/"
 
       - name: Activate release
         run: |
-          ssh -i ~/.ssh/personal_site_deploy -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" 'bash -s' -- "$SERVER_PATH" "$RELEASE_ID" <<'REMOTE'
+          ssh -i ~/.ssh/nitrene_site_deploy -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" 'bash -s' -- "$SERVER_PATH" "$RELEASE_ID" <<'REMOTE'
           set -euo pipefail
           SERVER_PATH="$1"
           RELEASE_ID="$2"
