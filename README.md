@@ -1,4 +1,4 @@
-# Personal Site
+# Nitrene Site
 
 这是一个适合部署到 4G2c 云服务器的个人网站骨架。默认方案是：
 
@@ -50,13 +50,13 @@ git push origin main
 push 到 `main` 后，GitHub Actions 会把 `src/` 发布到服务器的：
 
 ```text
-/var/www/personal-site/current
+/var/www/nitrene-site/current
 ```
 
 服务器使用 releases 目录做原子切换：
 
 ```text
-/var/www/personal-site/
+/var/www/nitrene-site/
 ├── current -> releases/<release-id>
 ├── releases/
 └── shared/
@@ -71,4 +71,3 @@ push 到 `main` 后，GitHub Actions 会把 `src/` 发布到服务器的：
 ```
 
 然后按 [deploy/server-setup.md](deploy/server-setup.md) 完成 Nginx、部署用户和 GitHub Secrets 配置。
-

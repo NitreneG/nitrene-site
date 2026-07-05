@@ -6,11 +6,11 @@ server {
     # Use "_" if you want to serve by server IP first.
     server_name example.com www.example.com;
 
-    root /var/www/personal-site/current;
+    root /var/www/nitrene-site/current;
     index index.html;
 
-    access_log /var/log/nginx/personal-site.access.log;
-    error_log /var/log/nginx/personal-site.error.log;
+    access_log /var/log/nginx/nitrene-site.access.log;
+    error_log /var/log/nginx/nitrene-site.error.log;
 
     charset utf-8;
     client_max_body_size 10m;
@@ -37,4 +37,3 @@ server {
         application/xml
         image/svg+xml;
 }
-

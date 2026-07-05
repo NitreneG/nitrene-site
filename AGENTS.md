@@ -67,8 +67,8 @@ python3 -m http.server 5173 -d src
 
 ## 部署约定
 
-- 发布源目录是 `src/`，目标目录默认是 `/var/www/personal-site/releases/<release-id>`。
-- 服务器上的 `/var/www/personal-site/current` 是指向当前 release 的符号链接。
+- 发布源目录是 `src/`，目标目录默认是 `/var/www/nitrene-site/releases/<release-id>`。
+- 服务器上的 `/var/www/nitrene-site/current` 是指向当前 release 的符号链接。
 - GitHub Actions 依赖这些 Secrets：
   - `SERVER_HOST`
   - `SERVER_USER`

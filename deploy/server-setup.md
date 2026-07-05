@@ -2,7 +2,7 @@
 
 这份文档只做服务器的一次性配置。完成以后，日常更新网站只需要在本地修改 `src/` 并 push 到 GitHub。
 
-下面示例默认服务器是 Ubuntu/Debian 系，部署目录是 `/var/www/personal-site`，部署用户是 `deploy`。
+下面示例默认服务器是 Ubuntu/Debian 系，部署目录是 `/var/www/nitrene-site`。如果只是个人服务器，也可以直接使用已有的 `nitrene` 用户发布；更规范的长期方案是创建专门的 `deploy` 用户。
 
 ## 1. 本地先检查服务器
 
@@ -25,21 +25,34 @@ sudo systemctl enable --now nginx
 
 如果你已经装好 Docker，可以先不动 Docker。这个静态站方案不依赖 Docker；以后加后端服务时再用 Docker Compose 会更清楚。
 
-## 3. 创建部署用户和目录
+## 3. 准备部署用户和目录
+
+如果你先用已有的 `nitrene` 用户发布，可以直接创建目录并授权给 `nitrene`：
+
+```bash
+sudo mkdir -p /var/www/nitrene-site/releases
+sudo mkdir -p /var/www/nitrene-site/shared
+
+sudo chown -R nitrene:www-data /var/www/nitrene-site
+sudo chmod -R 755 /var/www/nitrene-site
+```
+
+如果你想使用更独立的发布用户，再创建 `deploy`：
 
 ```bash
 sudo adduser deploy
 sudo usermod -aG www-data deploy
 
-sudo mkdir -p /var/www/personal-site/releases
-sudo mkdir -p /var/www/personal-site/shared
-sudo mkdir -p /var/www/personal-site/current
+sudo mkdir -p /var/www/nitrene-site/releases
+sudo mkdir -p /var/www/nitrene-site/shared
 
-sudo chown -R deploy:www-data /var/www/personal-site
-sudo chmod -R 755 /var/www/personal-site
+sudo chown -R deploy:www-data /var/www/nitrene-site
+sudo chmod -R 755 /var/www/nitrene-site
 ```
 
-如果你不想创建 `deploy` 用户，也可以用已有用户，但建议不要长期用 root 做自动部署。
+`current` 不需要手动创建成目录。GitHub Actions 第一次发布时会把它创建成指向某个 release 的符号链接。
+
+不要长期用 root 做自动部署。
 
 ## 4. 配置 GitHub Actions 的 SSH key
 
@@ -49,7 +62,7 @@ sudo chmod -R 755 /var/www/personal-site
 ssh-keygen -t ed25519 -C "github-actions-personal-site" -f ~/.ssh/personal_site_deploy
 ```
 
-把公钥放到服务器：
+把公钥放到服务器。下面以 `deploy` 为例；如果你使用 `nitrene` 发布，就把命令里的 `deploy` 换成 `nitrene`：
 
 ```bash
 ssh-copy-id -i ~/.ssh/personal_site_deploy.pub deploy@<server-ip>
@@ -69,35 +82,15 @@ sudo chmod 600 /home/deploy/.ssh/authorized_keys
 
 ```text
 SERVER_HOST       你的服务器公网 IP 或域名
-SERVER_USER       deploy
+SERVER_USER       nitrene 或 deploy
 SERVER_PORT       22
-SERVER_PATH       /var/www/personal-site
+SERVER_PATH       /var/www/nitrene-site
 SERVER_SSH_KEY    ~/.ssh/personal_site_deploy 的私钥内容
 ```
 
 `SERVER_SSH_KEY` 应该是私钥全文，不要提交到 GitHub 仓库文件里。
 
-## 5. 允许部署用户重载 Nginx
-
-GitHub Actions 发布成功后会测试并 reload Nginx。给 `deploy` 用户最小 sudo 权限：
-
-```bash
-sudo visudo -f /etc/sudoers.d/personal-site-deploy
-```
-
-写入：
-
-```text
-deploy ALL=(root) NOPASSWD: /usr/sbin/nginx -t, /bin/systemctl reload nginx, /usr/bin/systemctl reload nginx
-```
-
-保存后检查：
-
-```bash
-sudo -l -U deploy
-```
-
-## 6. 配置 Nginx 站点
+## 5. 配置 Nginx 站点
 
 在服务器创建站点配置：
 
@@ -133,7 +126,7 @@ sudo nginx -t
 sudo systemctl reload nginx
 ```
 
-## 7. 防火墙和腾讯云安全组
+## 6. 防火墙和腾讯云安全组
 
 服务器内的 UFW 可以这样设置：
 
@@ -151,7 +144,7 @@ HTTP: 80
 HTTPS: 443
 ```
 
-## 8. 第一次发布
+## 7. 第一次发布
 
 本地初始化 git，并推到 GitHub：
 
@@ -170,7 +163,7 @@ GitHub Actions 跑完后，再检查服务器：
 ./deploy/server-check.sh deploy@<server-ip> -p 22
 ```
 
-## 9. 以后经常改哪里
+## 8. 以后经常改哪里
 
 经常改：
 
@@ -190,5 +183,4 @@ GitHub Actions 跑完后，再检查服务器：
 - `/var/log/nginx/*.log`
 - `/etc/letsencrypt/`
 - `/home/deploy/.ssh/authorized_keys`
-- `/var/www/personal-site/releases`
-
+- `/var/www/nitrene-site/releases`

@@ -155,13 +155,12 @@ fi
 info "Tencent Cloud security group rules cannot be verified from inside the server."
 
 section "Deploy Directory"
-if [[ -d /var/www/personal-site ]]; then
-  ok "/var/www/personal-site exists"
-  ls -ld /var/www/personal-site /var/www/personal-site/current 2>/dev/null || true
+if [[ -d /var/www/nitrene-site ]]; then
+  ok "/var/www/nitrene-site exists"
+  ls -ld /var/www/nitrene-site /var/www/nitrene-site/current 2>/dev/null || true
 else
-  warn "/var/www/personal-site does not exist yet"
+  warn "/var/www/nitrene-site does not exist yet"
 fi
 
 section "Summary"
 info "If nginx, git, rsync, and deploy directory are ready, GitHub Actions can publish this site."
-
