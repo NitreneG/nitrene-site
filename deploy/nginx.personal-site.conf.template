@@ -2,9 +2,7 @@ server {
     listen 80;
     listen [::]:80;
 
-    # Replace with your domain after DNS is ready.
-    # Use "_" if you want to serve by server IP first.
-    server_name example.com www.example.com;
+    server_name nitrene.fun www.nitrene.fun;
 
     root /var/www/nitrene-site/current;
     index index.html;
