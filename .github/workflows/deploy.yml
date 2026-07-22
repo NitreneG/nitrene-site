@@ -27,7 +27,27 @@ jobs:
       - name: Validate required files
         run: |
           test -d src
-          test -f src/index.html
+          test -d public
+          test -f package.json
+          test -f pnpm-lock.yaml
+          test -f astro.config.mjs
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.14.4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build site
+        run: pnpm run build
 
       - name: Configure SSH
         run: |
@@ -68,7 +88,7 @@ jobs:
         run: |
           rsync -az --delete \
             -e "ssh -i ~/.ssh/nitrene_site_deploy -p $SERVER_PORT" \
-            src/ "$SERVER_USER@$SERVER_HOST:$SERVER_PATH/releases/$RELEASE_ID/"
+            dist/ "$SERVER_USER@$SERVER_HOST:$SERVER_PATH/releases/$RELEASE_ID/"
 
       - name: Activate release
         run: |

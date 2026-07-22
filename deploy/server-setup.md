@@ -1,6 +1,6 @@
 # Server Setup
 
-这份文档只做服务器的一次性配置。完成以后，日常更新网站只需要在本地修改 `src/` 并 push 到 GitHub。
+这份文档只做服务器的一次性配置。完成以后，日常更新网站只需要在本地修改 Astro 源码并 push 到 GitHub。
 
 下面示例默认服务器是 Ubuntu/Debian 系，部署目录是 `/var/www/nitrene-site`。如果只是个人服务器，也可以直接使用已有的 `nitrene` 用户发布；更规范的长期方案是创建专门的 `deploy` 用户。
 
@@ -23,7 +23,7 @@ sudo apt install -y nginx git rsync curl ca-certificates ufw
 sudo systemctl enable --now nginx
 ```
 
-如果你已经装好 Docker，可以先不动 Docker。这个静态站方案不依赖 Docker；以后加后端服务时再用 Docker Compose 会更清楚。
+如果你已经装好 Docker，可以先不动 Docker。这个 Astro 方案会在 GitHub Actions 里构建成静态 `dist/`，服务器不需要安装 Node、pnpm 或 Astro；Nginx 只负责托管构建产物。
 
 ## 3. 准备部署用户和目录
 
@@ -167,9 +167,11 @@ GitHub Actions 跑完后，再检查服务器：
 
 经常改：
 
-- `src/index.html`
-- `src/` 里的样式、图片、脚本
-- 如果以后接入构建工具，再改 `package.json` 和前端源码
+- `src/content/`：文章、动态、页面正文
+- `src/config/`：站点配置、导航、友链、相册、评论等
+- `src/assets/`：需要 Astro 处理和优化的图片
+- `public/`：直接原样发布的静态资源
+- `package.json`：只在需要调整构建脚本或依赖时修改
 
 偶尔改：
 
