@@ -11,5 +11,5 @@ slug: first-post
 ---
 
 ## Congratulations on the First Post of NitreneGlog!
-Born on June 30, 2026, NitreneGlog has once been built as a static site and then with `halo` system, and now, it has been rebuilt with `Astro` framework with `Firefly` theme. It is finally ready to share the first post with the world at 03:06 a.m. (UTC+8) on July 23, 2026!!! Congratulations!!! 
+Born on June 30, 2026, NitreneGlog has once been built as a static site and then with `halo` system, and now, it has been rebuilt with `Astro` framework with `Firefly` theme. It is finally ready to share the first post with the world at 03\:06 a.m. (UTC+8) on July 23, 2026!!! Congratulations!!! 
 
