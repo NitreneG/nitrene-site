@@ -16,6 +16,7 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     env:
       SERVER_HOST: ${{ secrets.SERVER_HOST }}
@@ -73,29 +74,50 @@ jobs:
           install -m 700 -d ~/.ssh
           printf '%s\n' "${{ secrets.SERVER_SSH_KEY }}" > ~/.ssh/nitrene_site_deploy
           chmod 600 ~/.ssh/nitrene_site_deploy
-          ssh-keyscan -p "$SERVER_PORT" "$SERVER_HOST" >> ~/.ssh/known_hosts
+          ssh-keyscan -T 10 -p "$SERVER_PORT" "$SERVER_HOST" >> ~/.ssh/known_hosts
 
       - name: Prepare release directory
         run: |
           RELEASE_ID="${GITHUB_SHA::12}-$(date -u +%Y%m%d%H%M%S)"
           echo "RELEASE_ID=$RELEASE_ID" >> "$GITHUB_ENV"
-          ssh -i ~/.ssh/nitrene_site_deploy -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" 'bash -s' -- "$SERVER_PATH" "$RELEASE_ID" <<'REMOTE'
+          timeout 45s ssh \
+            -o BatchMode=yes \
+            -o ConnectTimeout=15 \
+            -o ServerAliveInterval=15 \
+            -o ServerAliveCountMax=3 \
+            -i ~/.ssh/nitrene_site_deploy \
+            -p "$SERVER_PORT" \
+            "$SERVER_USER@$SERVER_HOST" 'bash -s' -- "$SERVER_PATH" "$RELEASE_ID" <<'REMOTE'
           set -euo pipefail
           SERVER_PATH="$1"
           RELEASE_ID="$2"
-          mkdir -p "$SERVER_PATH/releases/$RELEASE_ID"
+          RELEASE_PATH="$SERVER_PATH/releases/$RELEASE_ID"
+          mkdir -p "$RELEASE_PATH"
+          if [ -d "$SERVER_PATH/current" ]; then
+            cp -al "$SERVER_PATH/current/." "$RELEASE_PATH/"
+          fi
           mkdir -p "$SERVER_PATH/shared"
           REMOTE
 
       - name: Upload site
         run: |
-          rsync -az --delete \
-            -e "ssh -i ~/.ssh/nitrene_site_deploy -p $SERVER_PORT" \
+          timeout 15m rsync -azc --delete \
+            --timeout=120 \
+            --outbuf=L \
+            --info=NAME,PROGRESS2,STATS2 \
+            -e "ssh -o BatchMode=yes -o ConnectTimeout=15 -o ServerAliveInterval=15 -o ServerAliveCountMax=3 -i ~/.ssh/nitrene_site_deploy -p $SERVER_PORT" \
             dist/ "$SERVER_USER@$SERVER_HOST:$SERVER_PATH/releases/$RELEASE_ID/"
 
       - name: Activate release
         run: |
-          ssh -i ~/.ssh/nitrene_site_deploy -p "$SERVER_PORT" "$SERVER_USER@$SERVER_HOST" 'bash -s' -- "$SERVER_PATH" "$RELEASE_ID" <<'REMOTE'
+          timeout 45s ssh \
+            -o BatchMode=yes \
+            -o ConnectTimeout=15 \
+            -o ServerAliveInterval=15 \
+            -o ServerAliveCountMax=3 \
+            -i ~/.ssh/nitrene_site_deploy \
+            -p "$SERVER_PORT" \
+            "$SERVER_USER@$SERVER_HOST" 'bash -s' -- "$SERVER_PATH" "$RELEASE_ID" <<'REMOTE'
           set -euo pipefail
           SERVER_PATH="$1"
           RELEASE_ID="$2"
