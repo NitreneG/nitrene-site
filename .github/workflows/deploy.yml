@@ -125,5 +125,4 @@ jobs:
             mv "$SERVER_PATH/current" "$SERVER_PATH/manual-before-actions-$(date -u +%Y%m%d%H%M%S)"
           fi
           ln -sfn "$SERVER_PATH/releases/$RELEASE_ID" "$SERVER_PATH/current"
-          find "$SERVER_PATH/releases" -mindepth 1 -maxdepth 1 -type d | sort | head -n -5 | xargs -r rm -rf
           REMOTE
