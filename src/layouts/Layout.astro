@@ -165,6 +165,16 @@ const siteLang = lang.replace("_", "-");
           sizes={favicon.sizes}
           media={favicon.theme && `(prefers-color-scheme: ${favicon.theme})`}
         />
+        <link
+          rel="apple-touch-icon"
+          sizes="180x180"
+          href={url("/favicon/favicon.png")}
+        />
+        <link
+        rel="apple-touch-icon"
+        sizes="167x167"
+        href={url("/favicon/favicon.png")}
+        />
       ))
     }
 
