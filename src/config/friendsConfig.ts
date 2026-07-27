@@ -40,6 +40,37 @@ export const friendsConfig: FriendLink[] = [
 		weight: 9,
 		enabled: true,
 	},
+    {
+        title: "SrP-BloG",
+        imgurl: "https://blog.srprolin.top/favicon/favicon.ico",
+        desc: "如无必要，勿增实体。",
+        siteurl: "https://blog.srprolin.top/",
+        tags: ["Friends"],
+        weight: 10,
+        enabled: true,
+    },
+    {
+        title: "云志博客",
+        imgurl: "https://blog.yzlog.top/icon.png",
+        desc: "坚持努力，做最好的自己！",
+        siteurl: "https://blog.yzlog.top/",
+        tags: ["Friends"],
+        weight: 10,
+        enabled: true,
+    },
+    {
+        title: "Bilbao Crystallographic Server",
+        imgurl: "https://cryst.ehu.es/html/gif/upv.gif",
+        desc: "Bilbao Crystallographic Server is a web-based service for crystallographic computations.",
+        siteurl: "https://cryst.ehu.es/index.html",
+        tags: ["Tools"],
+        weight: 10,
+        enabled: true,
+    },
+    
+
+
+    
 ];
 
 // 获取启用的友链并进行排序
