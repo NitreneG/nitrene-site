@@ -552,6 +552,14 @@ const hasMultipleImages =
 
             // 键盘控制
             document.addEventListener('keydown', function(e) {
+                const target = e.target;
+                if (
+                    target instanceof Element &&
+                    target.closest('input, textarea, select, button, a, [contenteditable]')
+                ) {
+                    return;
+                }
+
                 if (!isBannerWallpaperMode() || !isCarouselEnabled()) return;
                 if (e.key === 'ArrowRight') {
                     var slides = getVisibleSlides();
@@ -935,4 +943,3 @@ const hasMultipleImages =
   }
 
 </style>
-

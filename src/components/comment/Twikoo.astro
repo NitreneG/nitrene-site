@@ -41,6 +41,55 @@ const config = {
     };
   }
 
+  // Add a separate optional QQ field while reusing Twikoo's native QQ lookup.
+  function mountQQInput() {
+    const metaContainer = document.querySelector(
+      "#twikoo .tk-submit .tk-meta-input",
+    );
+
+    if (!metaContainer || metaContainer.querySelector(".twikoo-qq-input")) {
+      return;
+    }
+
+    const qqGroup = document.createElement("div");
+    qqGroup.className =
+      "el-input el-input--small el-input-group el-input-group--prepend twikoo-qq-input";
+    qqGroup.innerHTML = `
+      <div class="el-input-group__prepend">QQ</div>
+      <input
+        class="el-input__inner"
+        type="text"
+        inputmode="numeric"
+        autocomplete="off"
+        placeholder="Optional (for Avatar and Email)"
+        aria-label="QQ number"
+      />
+    `;
+
+    metaContainer.prepend(qqGroup);
+
+    const qqInput = qqGroup.querySelector("input");
+    qqInput?.addEventListener("change", () => {
+      const qq = qqInput.value.trim();
+      if (!qq) return;
+
+      if (!/^[1-9]\d{4,11}$/.test(qq)) {
+        qqInput.setCustomValidity("Please enter a valid QQ number.");
+        qqInput.reportValidity();
+        return;
+      }
+
+      qqInput.setCustomValidity("");
+
+      const nickInput = metaContainer.querySelector('input[name="nick"]');
+      if (!(nickInput instanceof HTMLInputElement)) return;
+
+      nickInput.value = qq;
+      nickInput.dispatchEvent(new Event("input", { bubbles: true }));
+      nickInput.dispatchEvent(new Event("change", { bubbles: true }));
+    });
+  }
+
   // 初始化 Twikoo
   function initTwikoo() {
     if (typeof twikoo !== "undefined") {
@@ -55,6 +104,7 @@ const config = {
           .init(dynamicConfig)
           .then(() => {
             console.log("[Twikoo] 初始化完成");
+            mountQQInput();
           })
           .catch((error) => {
             console.error("[Twikoo] 初始化失败:", error);
@@ -93,3 +143,30 @@ const config = {
     }
   });
 </script>
+
+<style is:global>
+  #twikoo .tk-meta-input {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  #twikoo .tk-meta-input .el-input {
+    width: 100%;
+    margin: 0;
+  }
+
+  #twikoo .tk-meta-input .el-input + .el-input {
+    margin-left: 0;
+  }
+
+  @media (max-width: 767px) {
+    #twikoo .tk-meta-input {
+      grid-template-columns: 1fr;
+    }
+
+    #twikoo .tk-meta-input .el-input + .el-input {
+      margin-top: 0;
+    }
+  }
+</style>

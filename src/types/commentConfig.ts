@@ -24,6 +24,8 @@ export type CommentConfig = {
 		serverURL: string;
 		lang?: string;
 		emoji: string[];
+		meta?: ("nick" | "mail" | "link")[];
+		requiredMeta?: ("nick" | "mail")[];
 		login?: "enable" | "force" | "disable";
 		visitorCount?: boolean; // 是否统计访问量，true 启用访问量，false 关闭
 	};
