@@ -1,19 +1,14 @@
+# About NitreneG
+
+An undergraduate student @ Department of Physics, SUSTech. I am interested in theoretical and computational condensed matter physics, symmetry theory and scientific computing. 
+
 # About NitreneGlog
-
-Hi, I am **NitreneG**.
-
-This site is planned as a mixed personal archive: a place for blog notes, longer articles, research sparks, literature, photography, projects, and the server-building process behind the site itself.
+NitreneGlog is a soft archive for essays, projects, images, and living fragments. The site was born on June 30, 2026, and has been built with `Astro` framework. 
 
 ## What This Site Will Hold
 
-- **Blog**: lightweight notes, updates, and living fragments.
 - **Articles**: longer essays, research-oriented writing, technical records, and structured reflections.
-- **Projects**: things I build, test, publish, or keep learning from.
-- **Moments**: short entries that do not need to become full posts.
-- **Gallery**: images, screenshots, and future photography collections.
+- **Moments**: short messages, thoughts, and feelings.
+- **Gallery**: images, illustrations, and photography collections.
 
-## Current Stage
 
-NitreneGlog is being redesigned from a simple static page into an Astro-powered site. The visual direction is soft, clean, lightly anime-inspired, and highly customizable.
-
-Image placeholders are intentionally left in the configuration for later replacement.

@@ -7,7 +7,7 @@ export const profileConfig: ProfileConfig = {
 
 	name: "NitreneG",
 
-	bio: "A soft archive for essays, projects, images, and living fragments.",
+	bio: "A infp Ragdoll interested in theoretical and computational condensed matter physics.",
 
 	// Public social links shown under the profile card.
 	// Replace YOUR_HANDLE with your real X handle when ready.
