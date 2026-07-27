@@ -1,88 +1,39 @@
-# Nitrene Site
+# NitreneGlog
 
-这是 NitreneGlog 的 Astro 个人网站源码仓库。默认方案是：
+[NitreneGlog](https://nitrene.fun) 是 NitreneG 的个人博客网站，用于记录文章、项目、学习笔记和日常想法。
 
-1. 本地 Mac + Codex 开发网站内容。
-2. GitHub 保存 Astro 源码、内容、配置和部署流程。
-3. GitHub Actions 在 `main` 分支更新后安装依赖并运行 `pnpm run build`。
-4. Actions 把生成的 `dist/` 通过 SSH/rsync 发布到腾讯云服务器。
-5. 服务器上的 Nginx 只负责稳定地对外提供静态文件。
+网站基于 [Firefly](https://github.com/CuteLeaf/Firefly) 主题开发，由 Astro 构建为静态页面，并通过 GitHub Actions 自动发布到腾讯云服务器。
 
-## 项目结构
+## 技术信息
 
-```text
-.
-├── README.md
-├── package.json
-├── pnpm-lock.yaml
-├── astro.config.mjs
-├── .github/workflows/deploy.yml
-├── deploy/server-check.sh
-├── deploy/server-setup.md
-├── deploy/nginx.personal-site.conf.template
-├── public/
-├── scripts/
-└── src/
-```
+| 项目 | 当前配置 |
+| --- | --- |
+| 网站域名 | [nitrene.fun](https://nitrene.fun) |
+| 主题 | Firefly 6.14.4 |
+| Web 框架 | Astro 7.0.7 |
+| UI 框架 | Svelte 5.56.4 |
+| CSS | Tailwind CSS 4.3.2 |
+| 语言与类型检查 | TypeScript 6.0.3 |
+| CI 构建环境 | Node.js 22 |
+| 包管理器 | pnpm 9.14.4 |
+| 站内搜索 | Pagefind 1.5.2 |
+| 评论系统 | 自托管 Twikoo |
+| 本地开发系统 | macOS（Apple Silicon） |
+| 生产环境 | 腾讯云 Ubuntu + Nginx |
 
-## 哪些放进 GitHub
+生产网站不依赖常驻 Node.js 进程。Astro 在 GitHub Actions 中生成静态 `dist/`，服务器上的 Nginx 负责提供页面和静态资源。
 
-应该提交：
-
-- `src/`：Astro 页面、组件、配置、文章、样式和前端代码。
-- `public/`：不需要 Astro 处理的静态资源。
-- `scripts/`：构建辅助脚本。
-- `package.json` / `pnpm-lock.yaml`：前端依赖和构建脚本。
-- `.github/workflows/deploy.yml`：自动部署流程。
-- `deploy/`：服务器检查脚本、Nginx 模板、部署说明。
-- `README.md`：项目和运维说明。
-
-不要提交：
-
-- SSH 私钥，例如 `~/.ssh/id_ed25519`。
-- `.env`、API key、数据库密码。
-- 服务器日志、证书私钥、真实生产配置里的敏感值。
-- `node_modules/`、构建缓存、系统临时文件。
-
-## 日常开发流程
+## 本地开发
 
 ```bash
-# 第一次拉取后安装依赖
 pnpm install --frozen-lockfile
-
-# 本地开发预览
 pnpm dev
-
-# 生产构建验证
-pnpm run build
-
-# 修改网站内容后
-git add .
-git commit -m "Update personal site"
-git push origin main
 ```
 
-push 到 `main` 后，GitHub Actions 会构建 Astro 站点，并把 `dist/` 发布到服务器的：
-
-```text
-/var/www/nitrene-site/current
-```
-
-服务器使用 releases 目录做原子切换：
-
-```text
-/var/www/nitrene-site/
-├── current -> releases/<release-id>
-├── releases/
-└── shared/
-```
-
-## 首次服务器配置
-
-先阅读并执行：
+提交前可执行生产构建检查：
 
 ```bash
-./deploy/server-check.sh <server-user>@<server-ip> -p 22
+pnpm run build
 ```
 
-然后按 [deploy/server-setup.md](deploy/server-setup.md) 完成 Nginx、部署用户和 GitHub Secrets 配置。
+推送到 `main` 后，GitHub Actions 会自动构建并发布网站。

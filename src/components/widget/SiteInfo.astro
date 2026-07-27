@@ -9,7 +9,6 @@ import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
 import type { WidgetComponentConfig } from "@/types/config";
 import { detectBuildPlatform } from "@/utils/build-platform";
-import { formatDateI18nWithTime } from "@/utils/date-utils";
 
 interface Props {
 	class?: string;
@@ -50,9 +49,6 @@ const pnpmMatch = userAgent.match(/pnpm\/([\d.]+)/);
 if (pnpmMatch) {
 	pnpmVersion = `v${pnpmMatch[1]}`;
 }
-
-// 构建时间
-const buildTime = formatDateI18nWithTime(new Date());
 
 // 构建平台检测（使用 ci-info 自动识别 CI 环境）
 const unknownBuildPlatform =
@@ -144,12 +140,6 @@ const detailItems: {
 		icon: "simple-icons:pnpm",
 		label: i18n(I18nKey.siteInfoPnpmVersion),
 		value: pnpmVersion,
-	},
-	{
-		icon: "material-symbols:build-outline",
-		label: i18n(I18nKey.siteInfoBuildTime),
-		value: buildTime,
-		fullWidth: true,
 	},
 	{
 		icon: "material-symbols:computer-outline",

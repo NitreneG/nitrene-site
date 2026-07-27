@@ -39,3 +39,5 @@ package/
 *.iml
 .claude
 .vercel/
+
+AGENTS.md
