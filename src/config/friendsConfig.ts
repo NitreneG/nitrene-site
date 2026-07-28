@@ -67,6 +67,16 @@ export const friendsConfig: FriendLink[] = [
         weight: 10,
         enabled: true,
     },
+    {
+        title: "时易兔之庭 | 时易うさぎのBlog",
+        imgurl: "https://www.kafuuchino.fun/upload/b_b0c951a210f09600b931d49615472cc5.jpg",
+        desc: "分享芝士经验！请问您今天要来点麻辣兔头吗？",
+        siteurl: "https://www.kafuuchino.fun",
+        tags: ["Friends"],
+        weight: 10,
+        enabled: true,
+    },
+
     
 
 
