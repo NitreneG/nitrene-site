@@ -291,6 +291,17 @@ dynamic-feed {
 	margin-block: 0.5rem;
 }
 
+.dynamic-content img {
+	display: block;
+	width: auto;
+	max-width: 100%;
+	height: auto;
+	max-height: min(42rem, 75vh);
+	margin: 0.875rem auto;
+	border-radius: var(--radius-large);
+	object-fit: contain;
+}
+
 .dynamic-content ul,
 .dynamic-content ol,
 .dynamic-content blockquote,

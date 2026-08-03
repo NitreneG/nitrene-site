@@ -2,7 +2,6 @@
 import { onMount, tick } from "svelte";
 import ClientPagination from "@/components/common/ClientPagination.svelte";
 import { formatTimezoneOffset } from "@/utils/date-utils";
-import { registerDynamicGallery } from "./dynamic-gallery";
 import { registerDynamicInlineComments } from "./dynamic-inline-comments";
 
 type DynamicImage = {
@@ -15,7 +14,7 @@ type DynamicData = {
 	id: string;
 	published: number;
 	html: string;
-	images: DynamicImage[];
+	images?: DynamicImage[];
 	searchText: string;
 };
 
@@ -177,16 +176,25 @@ function createItem(entry: DynamicData) {
 	if (content) {
 		content.id = `${anchorId}-content`;
 		content.innerHTML = entry.html;
-		for (const image of entry.images) {
+		const existingSources = new Set(
+			[...content.querySelectorAll<HTMLImageElement>("img")].map((image) =>
+				image.getAttribute("src"),
+			),
+		);
+		// Third-party APIs may still return a separate images array. Append only
+		// images that are not already present in the rendered Markdown.
+		for (const image of entry.images ?? []) {
+			if (existingSources.has(image.src)) continue;
 			const element = document.createElement("img");
 			element.src = image.src;
 			element.alt = image.alt;
-			element.loading = "lazy";
 			if (image.title) element.title = image.title;
 			content.append(element);
 		}
-		const gallery = root.querySelector<HTMLElement>("dynamic-gallery");
-		if (gallery) gallery.dataset.sourceId = content.id;
+		content.querySelectorAll<HTMLImageElement>("img").forEach((image) => {
+			image.loading = "lazy";
+			image.decoding = "async";
+		});
 	}
 
 	const comments = root.querySelector<HTMLElement>("dynamic-inline-comments");
@@ -210,6 +218,7 @@ async function renderItems(items: DynamicData[]) {
 		const item = createItem(entry);
 		if (item) list.append(item);
 	}
+	document.dispatchEvent(new CustomEvent("dynamic-content:ready"));
 	if (restoreAnchorAfterRender) {
 		restoreAnchorAfterRender = false;
 		const target = document.getElementById(
@@ -233,7 +242,6 @@ $effect(() => {
 });
 
 onMount(() => {
-	registerDynamicGallery();
 	registerDynamicInlineComments();
 	const page = list.closest(".dynamic-page");
 	template =

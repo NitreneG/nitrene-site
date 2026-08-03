@@ -1,7 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
 import ImageWrapper from "@/components/common/ImageWrapper.astro";
-import DynamicGallery from "@/components/pages/dynamic/DynamicGallery.astro";
 import DynamicInlineComments from "@/components/pages/dynamic/DynamicInlineComments.astro";
 import { profileConfig } from "@/config";
 import I18nKey from "@/i18n/i18nKey";
@@ -40,7 +39,6 @@ const profileLabel = i18n(I18nKey.dynamicProfile).replace(
 			</header>
 
 			<div class="dynamic-content custom-md" data-dynamic-content></div>
-			<DynamicGallery sourceId="dynamic-template-content" />
 			<DynamicInlineComments src="" />
 		</article>
 	</dynamic-entry>

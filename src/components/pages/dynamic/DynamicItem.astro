@@ -2,7 +2,6 @@
 import { type CollectionEntry, render } from "astro:content";
 import { Icon } from "astro-icon/components";
 import ImageWrapper from "@/components/common/ImageWrapper.astro";
-import DynamicGallery from "@/components/pages/dynamic/DynamicGallery.astro";
 import DynamicInlineComments from "@/components/pages/dynamic/DynamicInlineComments.astro";
 import { profileConfig, siteConfig } from "@/config";
 import I18nKey from "@/i18n/i18nKey";
@@ -80,7 +79,6 @@ const profileLabel = i18n(I18nKey.dynamicProfile).replace(
 		<div id={`${anchorId}-content`} class="dynamic-content custom-md">
 			<Content />
 		</div>
-		<DynamicGallery sourceId={`${anchorId}-content`} />
 		{showInlineComments && commentPath && (
 			<DynamicInlineComments
 				src={`/dynamic/comments/?path=${encodeURIComponent(commentPath)}`}

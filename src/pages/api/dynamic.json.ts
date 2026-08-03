@@ -6,28 +6,20 @@ import {
 	sortDynamics,
 } from "@/utils/dynamic-utils";
 
-const markdownImagePattern = /!\[([^\]]*)\]\((\S+?)(?:\s+["']([^"']*)["'])?\)/g;
-
 export async function GET() {
 	const processor = await createMarkdownProcessor();
 	const dynamics = sortDynamics(await getCollection("dynamic"));
 	const data = await Promise.all(
 		dynamics.map(async (entry) => {
-			const images: Array<{ alt: string; src: string; title?: string }> = [];
-			const markdown = (entry.body || "").replace(
-				markdownImagePattern,
-				(_match, alt: string, src: string, title?: string) => {
-					images.push({ alt, src, ...(title ? { title } : {}) });
-					return "";
-				},
-			);
-			const rendered = await processor.render(markdown);
+			const rendered = await processor.render(entry.body || "");
 
 			return {
 				id: dynamicSlug(entry.id),
 				published: entry.data.published.getTime(),
 				html: rendered.code,
-				images,
+				// Local Markdown images stay inside html so their original order is kept.
+				// Keep this field for compatibility with third-party dynamic APIs.
+				images: [],
 				searchText: dynamicSearchText(entry),
 			};
 		}),
