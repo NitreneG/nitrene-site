@@ -41,13 +41,11 @@ const config = {
     };
   }
 
-  // Add a separate optional QQ field while reusing Twikoo's native QQ lookup.
-  function mountQQInput() {
-    const metaContainer = document.querySelector(
-      "#twikoo .tk-submit .tk-meta-input",
-    );
+  let qqInputObserver = null;
 
-    if (!metaContainer || metaContainer.querySelector(".twikoo-qq-input")) {
+  // Add a separate optional QQ field while reusing Twikoo's native QQ lookup.
+  function mountQQInput(metaContainer) {
+    if (metaContainer.querySelector(".twikoo-qq-input")) {
       return;
     }
 
@@ -69,6 +67,10 @@ const config = {
     metaContainer.prepend(qqGroup);
 
     const qqInput = qqGroup.querySelector("input");
+    qqInput?.addEventListener("input", () => {
+      qqInput.setCustomValidity("");
+    });
+
     qqInput?.addEventListener("change", () => {
       const qq = qqInput.value.trim();
       if (!qq) return;
@@ -90,6 +92,28 @@ const config = {
     });
   }
 
+  function mountQQInputs() {
+    document
+      .querySelectorAll("#twikoo .tk-submit .tk-meta-input")
+      .forEach(mountQQInput);
+  }
+
+  function observeQQInputs() {
+    qqInputObserver?.disconnect();
+    qqInputObserver = null;
+
+    mountQQInputs();
+
+    const twikooRoot = document.getElementById("twikoo");
+    if (!twikooRoot) return;
+
+    qqInputObserver = new MutationObserver(mountQQInputs);
+    qqInputObserver.observe(twikooRoot, {
+      childList: true,
+      subtree: true,
+    });
+  }
+
   // 初始化 Twikoo
   function initTwikoo() {
     if (typeof twikoo !== "undefined") {
@@ -104,7 +128,7 @@ const config = {
           .init(dynamicConfig)
           .then(() => {
             console.log("[Twikoo] 初始化完成");
-            mountQQInput();
+            observeQQInputs();
           })
           .catch((error) => {
             console.error("[Twikoo] 初始化失败:", error);

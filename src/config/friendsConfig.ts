@@ -37,7 +37,7 @@ export const friendsConfig: FriendLink[] = [
 		desc: "The LiuQH Lab is a research lab focused on theoretical and computational condensed matter physics.",
 		siteurl: "https://liuqh.phy.sustech.edu.cn/",
 		tags: ["Friends"],
-		weight: 9,
+		weight: 15,
 		enabled: true,
 	},
     {
