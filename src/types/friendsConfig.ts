@@ -9,6 +9,18 @@ export type FriendLink = {
 	enabled: boolean; // 是否启用
 };
 
+// JSON 友链数据源，同时用于生成公开的 /friends.json。
+export type FriendRecord = {
+	name: string;
+	url: string;
+	description: string;
+	avatar: string;
+	backlink: string;
+	tags?: string[];
+	weight: number;
+	enabled: boolean;
+};
+
 export type FriendsPageConfig = {
 	title?: string; // 页面标题，留空则使用 i18n 中的翻译
 	description?: string; // 页面描述，留空则使用 i18n 中的翻译

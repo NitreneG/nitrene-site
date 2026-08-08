@@ -1,4 +1,9 @@
-import type { FriendLink, FriendsPageConfig } from "../types/friendsConfig";
+import friendsData from "../data/friends.json";
+import type {
+	FriendLink,
+	FriendRecord,
+	FriendsPageConfig,
+} from "../types/friendsConfig";
 
 // 可以在src/content/spec/friends.md中编写友链页面下方的自定义内容
 
@@ -20,68 +25,17 @@ export const friendsPageConfig: FriendsPageConfig = {
 	randomizeSort: false,
 };
 
-// 友链配置
-export const friendsConfig: FriendLink[] = [
-	{
-		title: "FindSpinGroup",
-		imgurl: "https://findspingroup.com/static/images/findspingroup_logo_square.svg",
-		desc: "The FindSpinGroup is a online platform for Spin Space Group symmetry analysis.",
-		siteurl: "https://findspingroup.com",
-		tags: ["Tools"],
-		weight: 10,
-		enabled: true,
-	},
-	{
-		title: "LiuQH Lab",
-        imgurl: "/assets/images/sustechlogo.jpeg",
-		desc: "The LiuQH Lab is a research lab focused on theoretical and computational condensed matter physics.",
-		siteurl: "https://liuqh.phy.sustech.edu.cn/",
-		tags: ["Friends"],
-		weight: 15,
-		enabled: true,
-	},
-    {
-        title: "SrP-BloG",
-        imgurl: "https://blog.srprolin.top/favicon/favicon.ico",
-        desc: "如无必要，勿增实体。",
-        siteurl: "https://blog.srprolin.top/",
-        tags: ["Friends"],
-        weight: 10,
-        enabled: true,
-    },
-    {
-        title: "云志博客",
-        imgurl: "https://blog.yzlog.top/icon.png",
-        desc: "坚持努力，做最好的自己！",
-        siteurl: "https://blog.yzlog.top/",
-        tags: ["Friends"],
-        weight: 10,
-        enabled: true,
-    },
-    {
-        title: "Bilbao Crystallographic Server",
-        imgurl: "https://cryst.ehu.es/html/gif/upv.gif",
-        desc: "Bilbao Crystallographic Server is a web-based service for crystallographic computations.",
-        siteurl: "https://cryst.ehu.es/index.html",
-        tags: ["Tools"],
-        weight: 10,
-        enabled: true,
-    },
-    {
-        title: "时易兔之庭 | 时易うさぎのBlog",
-        imgurl: "https://www.kafuuchino.fun/upload/b_b0c951a210f09600b931d49615472cc5.jpg",
-        desc: "分享芝士经验！请问您今天要来点麻辣兔头吗？",
-        siteurl: "https://www.kafuuchino.fun",
-        tags: ["Friends"],
-        weight: 10,
-        enabled: true,
-    },
-
-    
-
-
-    
-];
+// JSON 是友链的唯一数据源；这里转换为 Firefly 主题现有字段。
+const friendRecords: FriendRecord[] = friendsData;
+export const friendsConfig: FriendLink[] = friendRecords.map((friend) => ({
+	title: friend.name,
+	imgurl: friend.avatar,
+	desc: friend.description,
+	siteurl: friend.url,
+	tags: friend.tags,
+	weight: friend.weight,
+	enabled: friend.enabled,
+}));
 
 // 获取启用的友链并进行排序
 export const getEnabledFriends = (): FriendLink[] => {

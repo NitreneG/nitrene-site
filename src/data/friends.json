@@ -1,0 +1,62 @@
+[
+	{
+		"name": "FindSpinGroup",
+		"url": "https://findspingroup.com",
+		"description": "The FindSpinGroup is a online platform for Spin Space Group symmetry analysis.",
+		"avatar": "https://findspingroup.com/static/images/findspingroup_logo_square.svg",
+		"backlink": "https://findspingroup.com",
+		"tags": ["Tools"],
+		"weight": 5,
+		"enabled": true
+	},
+	{
+		"name": "LiuQH Lab",
+		"url": "https://liuqh.phy.sustech.edu.cn/",
+		"description": "The LiuQH Lab is a research lab focused on theoretical and computational condensed matter physics.",
+		"avatar": "https://nitrene.fun/assets/images/sustechlogo.jpeg",
+		"backlink": "https://liuqh.phy.sustech.edu.cn/",
+		"tags": ["Friends"],
+		"weight": 15,
+		"enabled": true
+	},
+	{
+		"name": "SrP-BloG",
+		"url": "https://blog.srprolin.top/",
+		"description": "如无必要，勿增实体。",
+		"avatar": "https://blog.srprolin.top/favicon/favicon.ico",
+		"backlink": "https://blog.srprolin.top/frlinks/",
+		"tags": ["Friends"],
+		"weight": 10,
+		"enabled": true
+	},
+	{
+		"name": "云志博客",
+		"url": "https://blog.yzlog.top/",
+		"description": "坚持努力，做最好的自己！",
+		"avatar": "https://blog.yzlog.top/icon.png",
+		"backlink": "https://blog.yzlog.top/",
+		"tags": ["Friends"],
+		"weight": 10,
+		"enabled": true
+	},
+	{
+		"name": "Bilbao Crystallographic Server",
+		"url": "https://cryst.ehu.es/index.html",
+		"description": "Bilbao Crystallographic Server is a web-based service for crystallographic computations.",
+		"avatar": "https://cryst.ehu.es/html/gif/upv.gif",
+		"backlink": "https://cryst.ehu.es/index.html",
+		"tags": ["Tools"],
+		"weight": 5,
+		"enabled": true
+	},
+	{
+		"name": "时易兔之庭 | 时易うさぎのBlog",
+		"url": "https://www.kafuuchino.fun",
+		"description": "分享芝士经验！请问您今天要来点麻辣兔头吗？",
+		"avatar": "https://www.kafuuchino.fun/upload/b_b0c951a210f09600b931d49615472cc5.jpg",
+		"backlink": "https://www.kafuuchino.fun",
+		"tags": ["Friends"],
+		"weight": 10,
+		"enabled": true
+	}
+]

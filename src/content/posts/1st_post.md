@@ -3,7 +3,7 @@ title: The First Post for NitreneGlog!!!
 published: 2026-07-23
 pinned: false
 description: 
-  Welcome to NitreneGlog, a soft archive for essays, projects, images, and living fragments. This is the first post of the blog, and it serves as an introduction to the content and purpose of the site. Here, you will find a collection of thoughts, ideas, and creations that reflect the author's interests and experiences. Stay tuned for more posts and updates as we explore various topics together.
+  Welcome to NitreneGlog, a soft archive for essays, projects, images, and living fragments. This is the first post of the blog, and it serves as an introduction to the content and purpose of the site. 
 tags: ["first post"]
 category: Blog
 image: ./images/articles/first-post/folder.jpeg
