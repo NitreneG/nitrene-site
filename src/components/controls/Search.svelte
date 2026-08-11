@@ -137,10 +137,12 @@ const search = async (keyword: string, isDesktop: boolean): Promise<void> => {
 onMount(() => {
 	const handleDocumentClick = (event: MouseEvent) => {
 		const searchBar = document.getElementById("search-bar");
+		const searchSwitch = document.getElementById("search-switch");
 		const panel = document.getElementById("search-panel");
 		if (
 			event.target instanceof Node &&
 			!searchBar?.contains(event.target) &&
+			!searchSwitch?.contains(event.target) &&
 			!panel?.contains(event.target)
 		) {
 			collapseDesktopSearch();
@@ -331,4 +333,3 @@ top-20 left-4 md:left-[unset] right-4 shadow-2xl rounded-2xl p-2">
         overflow-y: auto;
     }
 </style>
-

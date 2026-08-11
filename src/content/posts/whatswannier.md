@@ -27,7 +27,7 @@ e^{i\mathbf k\cdot\mathbf R}
 $$
 
 However, Bloch's picture describe the electron as a "running wave" in the infinite potential field, which is not naturally consistent with the "atomic" picture. Early quantum mechanics provided a clear orbital picture for isolated
-atoms, most notably through the exact solution of the hydrogen atom and approximate treatments of many-electron atoms. It is simpler and more intuiative to treat the electron states in the periodic potential as the linear combination of the localized atomic-orbital-like real space functions.
+atoms, most notably through the exact solution of the hydrogen atom and approximate treatments of many-electron atoms. It is simpler and more intuitive to treat the electron states in the periodic potential as the linear combination of the localized atomic-orbital-like real space functions.
 
 Gregory Wannier gave his answer in 1937 when studying the electron-hole excitation in the crystal. He constructed the Wannier Functions (WFs) to bridge the above gap. [[2]](#ref-2)
 
@@ -640,6 +640,7 @@ and complexity of the effective model to be controlled through the
 real-space cutoff. With the real-space Wannier Hamiltonian, position operator, and other physical operators represented in the Wannier basis, we gain efficient access to these physical quantities. **Wannierization does not change the physics; it changes the language in which the physics becomes transparent.**
 
 References:
+
 <span id="ref-1"></span>1. F. Bloch, “Über die Quantenmechanik der Elektronen in Kristallgittern,” *Z. Phys.* **52**, 555–600 (1929), [doi:10.1007/BF01339455](https://doi.org/10.1007/BF01339455).
 
 <span id="ref-2"></span>2. G. H. Wannier, “The Structure of Electronic Excitation Levels in Insulating Crystals,” *Phys. Rev.* **52**, 191–197 (1937), [doi:10.1103/PhysRev.52.191](https://doi.org/10.1103/PhysRev.52.191).
