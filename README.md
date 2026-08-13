@@ -23,17 +23,4 @@
 
 生产网站不依赖常驻 Node.js 进程。Astro 在 GitHub Actions 中生成静态 `dist/`，服务器上的 Nginx 负责提供页面和静态资源。
 
-## 本地开发
 
-```bash
-pnpm install --frozen-lockfile
-pnpm dev
-```
-
-提交前可执行生产构建检查：
-
-```bash
-pnpm run build
-```
-
-推送到 `main` 后，GitHub Actions 会自动构建并发布网站。
