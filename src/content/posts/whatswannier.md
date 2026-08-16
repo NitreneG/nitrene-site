@@ -641,17 +641,16 @@ real-space cutoff. With the real-space Wannier Hamiltonian, position operator, a
 
 References:
 
-<span id="ref-1"></span>1. F. Bloch, “Über die Quantenmechanik der Elektronen in Kristallgittern,” *Z. Phys.* **52**, 555–600 (1929), [doi:10.1007/BF01339455](https://doi.org/10.1007/BF01339455).
+<span id="ref-1"></span>1. F. Bloch, “Über die Quantenmechanik der Elektronen in Kristallgittern,” *Z. Phys.* **52**, 555–600 (1929), DOI: [10.1007/BF01339455](https://doi.org/10.1007/BF01339455).
 
-<span id="ref-2"></span>2. G. H. Wannier, “The Structure of Electronic Excitation Levels in Insulating Crystals,” *Phys. Rev.* **52**, 191–197 (1937), [doi:10.1103/PhysRev.52.191](https://doi.org/10.1103/PhysRev.52.191).
+<span id="ref-2"></span>2. G. H. Wannier, “The Structure of Electronic Excitation Levels in Insulating Crystals,” *Phys. Rev.* **52**, 191–197 (1937), DOI: [10.1103/PhysRev.52.191](https://doi.org/10.1103/PhysRev.52.191).
 
-<span id="ref-3"></span>3. N. Marzari and D. Vanderbilt, “Maximally Localized Generalized Wannier Functions for Composite Energy Bands,” *Phys. Rev. B* **56**, 12847–12865 (1997), [doi:10.1103/PhysRevB.56.12847](https://doi.org/10.1103/PhysRevB.56.12847).
+<span id="ref-3"></span>3. N. Marzari and D. Vanderbilt, “Maximally Localized Generalized Wannier Functions for Composite Energy Bands,” *Phys. Rev. B* **56**, 12847–12865 (1997), DOI: [10.1103/PhysRevB.56.12847](https://doi.org/10.1103/PhysRevB.56.12847).
 
-<span id="ref-4"></span>4. I. Souza, N. Marzari, and D. Vanderbilt, “Maximally Localized Wannier Functions for Entangled Energy Bands,” *Phys. Rev. B* **65**, 035109 (2001), [doi:10.1103/PhysRevB.65.035109](https://doi.org/10.1103/PhysRevB.65.035109).
+<span id="ref-4"></span>4. I. Souza, N. Marzari, and D. Vanderbilt, “Maximally Localized Wannier Functions for Entangled Energy Bands,” *Phys. Rev. B* **65**, 035109 (2001), DOI: [10.1103/PhysRevB.65.035109](https://doi.org/10.1103/PhysRevB.65.035109).
 
-<span id="ref-5"></span>5. A. A. Mostofi *et al.*, “wannier90: A Tool for Obtaining Maximally-Localised Wannier Functions,” *Comput. Phys. Commun.* **178**, 685–699 (2008), [doi:10.1016/j.cpc.2007.11.016](https://doi.org/10.1016/j.cpc.2007.11.016).
+<span id="ref-5"></span>5. A. A. Mostofi *et al.*, “wannier90: A Tool for Obtaining Maximally-Localised Wannier Functions,” *Comput. Phys. Commun.* **178**, 685–699 (2008), DOI: [10.1016/j.cpc.2007.11.016](https://doi.org/10.1016/j.cpc.2007.11.016).
 
-<span id="ref-6"></span>6. N. Marzari *et al.*, “Maximally Localized Wannier Functions: Theory and Applications,” *Rev. Mod. Phys.* **84**, 1419–1475 (2012), [doi:10.1103/RevModPhys.84.1419](https://doi.org/10.1103/RevModPhys.84.1419).
+<span id="ref-6"></span>6. N. Marzari *et al.*, “Maximally Localized Wannier Functions: Theory and Applications,” *Rev. Mod. Phys.* **84**, 1419–1475 (2012), DOI: [10.1103/RevModPhys.84.1419](https://doi.org/10.1103/RevModPhys.84.1419).
 
 ![sigrika](./images/articles/whatswannier/sigrika.jpeg)
-
