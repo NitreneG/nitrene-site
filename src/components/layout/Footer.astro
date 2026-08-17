@@ -2,6 +2,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { footerConfig, profileConfig } from "@/config";
+import publicSecurityIcon from "@/assets/images/public-security-beian.png?url";
 import moeIcpIcon from "@/assets/images/moe.svg?url";
 import { url } from "@/utils/url-utils";
 
@@ -21,6 +22,7 @@ if (footerConfig.enable) {
 		// 移除HTML注释，并注入需要经 Astro/Vite 处理的资源路径
 		customFooterHtml = customFooterHtml
 			.replace(/<!--[\s\S]*?-->/g, "")
+			.replaceAll("__PUBLIC_SECURITY_ICON__", url(publicSecurityIcon))
 			.replaceAll("__MOE_ICP_ICON__", url(moeIcpIcon))
 			.trim();
 	} catch (error) {

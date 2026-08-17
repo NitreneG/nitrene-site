@@ -8,7 +8,32 @@
     line-height: 1.7;
   }
 
-  .nitrene-footer-links,
+  .nitrene-footer-links {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.35rem 0.75rem;
+    width: 100%;
+    max-width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+
+  .nitrene-footer-links > * {
+    flex: 0 0 auto;
+  }
+
+  .nitrene-footer-links > :first-child {
+    margin-left: auto;
+  }
+
+  .nitrene-footer-links > :last-child {
+    margin-right: auto;
+  }
+
+  .nitrene-footer-cloud,
   .nitrene-footer-runtime {
     display: flex;
     flex-wrap: wrap;
@@ -22,11 +47,19 @@
     font-weight: 600;
   }
 
+  .nitrene-public-security-beian,
   .nitrene-moe-icp,
   .nitrene-cloud-badge {
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
+  }
+
+  .nitrene-public-security-beian img {
+    width: auto;
+    height: 1.2em;
+    flex: 0 0 auto;
+    object-fit: contain;
   }
 
   .nitrene-moe-icp img {
@@ -60,11 +93,20 @@
   <div class="nitrene-footer-links">
     <a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">粤ICP备2026092424号</a>
     <span aria-hidden="true">/</span>
+    <a class="nitrene-public-security-beian" href="https://beian.mps.gov.cn/#/query/webSearch?code=44030002015681" target="_blank" rel="noopener noreferrer">
+      <img src="__PUBLIC_SECURITY_ICON__" alt="" aria-hidden="true" loading="lazy" />
+      <span>粤公网安备44030002015681号</span>
+    </a>
+    <span aria-hidden="true">/</span>
     <a class="nitrene-moe-icp" href="https://icp.gov.moe/?keyword=20260639" target="_blank" rel="noreferrer">
       <img src="__MOE_ICP_ICON__" alt="" aria-hidden="true" loading="lazy" />
       <span>萌ICP备20260639号</span>
     </a>
-    <span aria-hidden="true">/</span>
+  </div>
+  <a class="nitrene-myssl-seal" href="https://myssl.com/nitrene.fun?from=mysslid" target="_blank" rel="noopener noreferrer" title="查看 MySSL HTTPS 安全评估">
+    <img src="https://static.myssl.com/res/images/myssl-id3.png" alt="MySSL HTTPS 安全认证" width="133" height="38" loading="lazy" />
+  </a>
+  <div class="nitrene-footer-cloud">
     <a class="nitrene-cloud-badge" href="https://cloud.tencent.com/" target="_blank" rel="noreferrer" aria-label="Hosted on Tencent Cloud">
       <svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M17.5 19H8a5 5 0 1 1 1.2-9.85A6.5 6.5 0 0 1 21 13a4 4 0 0 1-3.5 6Z" />
@@ -72,9 +114,6 @@
       <span>Hosted on Tencent Cloud</span>
     </a>
   </div>
-  <a class="nitrene-myssl-seal" href="https://myssl.com/nitrene.fun?from=mysslid" target="_blank" rel="noopener noreferrer" title="查看 MySSL HTTPS 安全评估">
-    <img src="https://static.myssl.com/res/images/myssl-id3.png" alt="MySSL HTTPS 安全认证" width="133" height="38" loading="lazy" />
-  </a>
   <div class="nitrene-footer-runtime">
     <span>Running for</span>
     <strong id="nitrene-site-uptime">0 days 0 hours 0 minutes 0 seconds</strong>
