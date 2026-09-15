@@ -31,7 +31,6 @@ I spend a probably unreasonable amount of time on other interests.
 Recently, K-pop has been a major source of entertainment for me. My bias is **NMIXX Haewon**. My favorite groups include 
 - [NMIXX](https://nmixx.jype.com/Default) 爻 
 - [ILLIT](https://illit-official.jp/) 礼 
-- [aespa](https://aespa.com/) 吒 
 
 Besides K-pop, my faves also include [Cheer Chen 陳綺貞](https://www.cheerego.com/dome_web/index.php) and [Olivia Rodrigo 娅娅](https://www.oliviarodrigo.com/). 
 
