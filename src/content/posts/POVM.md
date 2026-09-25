@@ -276,7 +276,11 @@ allowing an inconclusive result.
 
 ## Minimum Error Discrimination
 
+---
 Always make a guess. -- I want an answer, even if you are lying.
+
+---
+        
 ### Binary minimum error discrimination
 
 Sample: $S=\{p_0, \rho_0; p_1, \rho_1\}$, with  POVMs $\{E_0, E_1\}$
@@ -366,10 +370,16 @@ Even if we  optimize over all possible POVMs, we still get a PVM as the optimal 
 
 
 ## Unambiguous  discrimination
+
+---
 Never make a wrong conclusive guess. -- I don't know.
 
+---
 
-$E_0+E_1+E_?=I$ we allow an inconclusive outcome $E_?$ to avoid the error. We are sure that if we get the outcome $E_0$ or $E_1$
+
+
+$E_0+E_1+E_?=I$ 
+we allow an inconclusive outcome $E_?$ to avoid the error. We are sure that if we get the outcome $E_0$ or $E_1$
 $$
 \begin{aligned}
     Tr(E_0 \rho_1) = Tr(E_1 \rho_0) = 0
@@ -426,7 +436,7 @@ $$
 So we have the Ivanovic-Dieks-Peres (IDP) limit
 $$
 \begin{aligned}
-    P_{succ}^{USD} = a_max(1-c^2) = 1 - c = 1 - |\langle\psi_0|\psi_1\rangle|
+    P_{succ}^{USD} = a_{max}(1-c^2) = 1 - c = 1 - |\langle\psi_0|\psi_1\rangle|
 \end{aligned}
 $$
 
