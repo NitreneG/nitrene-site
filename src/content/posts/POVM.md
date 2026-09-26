@@ -1,5 +1,5 @@
 ---
-title: POVM -- General Quantum Measurement
+title: POVM -- Generalized Quantum Measurement
 published: 2026-09-24
 pinned: false
 description: 
@@ -38,7 +38,7 @@ satisfying the following properties:
   \mu\left(\bigcup_{n=1}^{\infty} A_n\right) = \sum_{n=1}^{\infty} \mu(A_n)
   $$
 
-Naturally, the *Positive Operator-Valued Measure* is the map but not to the positive real number
+A POVM generalizes an ordinary measure by replacing nonnegative real values with positive semidefinite operators.
 
 $$
 \begin{aligned}
@@ -52,10 +52,13 @@ where $\mathcal{B}(\mathcal{H})_+$ is the set of positive semi-definite bounded 
 - $E(\Omega) = I$
 
 Given a quantum state $\rho$, the POVM induces an ordinary probability
-measure through 
+measure, specifies the statistics of the measurement outcomes
+
 $$p(m) = Tr(E_m \rho)$$
 
 where $\rho$ is the density matrix of any quantum state in $\mathcal{H}$
+
+
 
 # Measurement
 
@@ -91,27 +94,15 @@ $$
 \end{aligned}
 $$
 
-Then we come to the superposition. The state has the quantum amplitude at $x_0$
+Suppose we perform a non-degenerate projective measurement and obtain the outcome $o_m$. Conditioned on this outcome, the state is updated to the corresponding eigenstate $\ket{\psi_m}$. This is the usual measurement “collapse”.
+
+It is useful to distinguish this conditioned state update from decoherence. If the measurement is performed but its outcome is ignored, the state is instead described by
+
 $$
-\begin{aligned}
-    \phi(x_0) = \sum_{m} c_m \psi_m(x_0)
-\end{aligned}
-$$
-and we know that for the coherent superposition the detection probability is 
-$$
-\begin{aligned}
-    |\phi(x_0)|^2 = Re\sum_{m,n} c_m c_n^* \psi_m(x_0) \psi_n^*(x_0)
-\end{aligned}
+\rho \longrightarrow \sum_i P_i \rho P_i,
 $$
 
-suppose we measure and get the outcome $o_i$, then the state will collapse to the eigenvector $\psi_i$, decohering the superposition. We have the detection probability:
-$$
-\begin{aligned}
-    |\phi(x_0)|^2= |\psi_i(x_0)|^2
-\end{aligned}
-$$
-
-the decoherence changes the way we detect the state and decode the Quantum furnished information. 
+which removes the coherence between different measurement eigenspaces. The decoherence changes the way we detect the state and decode the Quantum furnished information. 
 
 ## General Quantum Measurement
 
@@ -157,7 +148,7 @@ A POVM on a $d$-dimensional system may have more than $d$ outcomes.
 
 
 # Detection
-Having defined POVMs mathematically, a natural question remains: can every valid POVM be physically realized? Naimark's dilation theorem answers this question affirmatively. In fact, any POVMs can be realized by a projective measurement with an auxiliary system. Here gives the **Naimark's Dilation Theorem**:
+Having defined POVMs mathematically, a natural question remains: can every valid POVM be physically realized? Naimark's dilation theorem answers this question affirmatively. In fact, any POVMs can be realized by a projective measurement with an auxiliary system. **Naimark's Dilation Theorem** states the following:
 
 For every POVM $\{E_m\}$ on a Hilbert space $\mathcal{H}_S$, satisfying
 $$
@@ -233,7 +224,7 @@ $$
 easy to verify that
 $$
 \begin{aligned}
-    V V^\dagger  &= \sum_k M_k^\dagger M_k  \\
+    V^\dagger V  &= \sum_k M_k^\dagger M_k  \\
     &= \sum_k  E_k  = I_S
 \end{aligned}
 $$
@@ -260,7 +251,7 @@ POVMs are the **Natural** language for optimal quantum measurement. If we have p
 
 # Discrimination --I want/I don't know?
 
-The "uncertainty" plays the most kernel role in quantum information. You prepare a quantum state to store information, but you don't exactly know which one it is. You receive the state, and you perform a projective measurement through the Naimark's dilation, but you may still be not sure if it is a "0" or "1". Quantum Mechanically, two non-orthogonal states cannot be perfectly distinguished.
+Uncertainty lies at the heart of quantum information.You prepare a quantum state to store information, but you don't exactly know which one it is. You receive the state, and you perform a projective measurement through the Naimark's dilation, but you may still be not sure if it is a "0" or "1". Quantum Mechanically, two non-orthogonal states cannot be perfectly distinguished.
 
 
 $$
@@ -365,7 +356,7 @@ $$
 \end{aligned}
 $$
 
-Even if we  optimize over all possible POVMs, we still get a PVM as the optimal measurement. 
+For binary minimum-error discrimination, optimizing over all POVMs yields an optimal projective measurement (PVM): The Helstrom measurement. 
 
 
 
